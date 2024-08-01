@@ -23,6 +23,9 @@ var obstacles;
 var score = 0;
 var scoreText;
 var background;
+var gameOverText;
+var restartButton;
+var gameOver = false;
 var game = new Phaser.Game(config);
 
 function preload() {
@@ -30,6 +33,7 @@ function preload() {
     this.load.image('car', 'path/to/car.png'); // استبدل بمسار الصورة
     this.load.image('obstacle', 'path/to/obstacle.png'); // استبدل بمسار الصورة
     this.load.image('background', 'path/to/background.png'); // استبدل بمسار الصورة
+    this.load.audio('bgMusic', 'path/to/background-music.mp3'); // استبدل بمسار الصوت
 }
 
 function create() {
@@ -49,9 +53,18 @@ function create() {
     cursors = this.input.keyboard.createCursorKeys();
 
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+
+    gameOverText = this.add.text(400, 300, '', { fontSize: '64px', fill: '#fff' }).setOrigin(0.5);
+    restartButton = this.add.text(400, 400, '', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5);
+
+    // Add background music
+    this.bgMusic = this.sound.add('bgMusic', { volume: 0.5, loop: true });
+    this.bgMusic.play();
 }
 
 function update() {
+    if (gameOver) return;
+
     background.tilePositionY -= 5;
 
     if (cursors.left.isDown) {
@@ -93,5 +106,28 @@ function addObstacle() {
 function endGame(player, obstacle) {
     this.physics.pause();
     player.setTint(0xff0000);
-    scoreText.setText('Game Over! Score: ' + score);
+    gameOverText.setText('Game Over');
+    restartButton.setText('Click to Restart');
+    gameOver = true;
+
+    // Stop background music
+    this.bgMusic.stop();
+
+    restartButton.setInteractive({ useHandCursor: true }).on('pointerdown', () => restartGame());
+}
+
+function restartGame() {
+    score = 0;
+    scoreText.setText('Score: 0');
+    gameOverText.setText('');
+    restartButton.setText('');
+    gameOver = false;
+    this.physics.resume();
+
+    // Reset player position and color
+    player.clearTint();
+    player.setPosition(400, 500);
+
+    // Restart background music
+    this.bgMusic.play();
 }
