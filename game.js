@@ -22,23 +22,25 @@ var cursors;
 var obstacles;
 var score = 0;
 var scoreText;
+var background;
 var game = new Phaser.Game(config);
 
 function preload() {
-    this.load.image('road', 'https://github.com/yazeedayesh/simple-game/tree/main/images/1.png'); // استبدل بمسار الصورة
-    this.load.image('car', 'https://github.com/yazeedayesh/simple-game/tree/main/images/2.png'); // استبدل بمسار الصورة
-    this.load.image('obstacle', 'https://github.com/yazeedayesh/simple-game/tree/main/images/3.png'); // استبدل بمسار الصورة
+    this.load.image('road', 'path/to/road.png'); // استبدل بمسار الصورة
+    this.load.image('car', 'path/to/car.png'); // استبدل بمسار الصورة
+    this.load.image('obstacle', 'path/to/obstacle.png'); // استبدل بمسار الصورة
+    this.load.image('background', 'path/to/background.png'); // استبدل بمسار الصورة
 }
 
 function create() {
-    this.add.tileSprite(400, 300, 800, 600, 'road').setScale(2);
-
+    background = this.add.tileSprite(400, 300, 800, 600, 'background');
+    
     player = this.physics.add.sprite(400, 500, 'car');
     player.setCollideWorldBounds(true);
 
     obstacles = this.physics.add.group();
     this.time.addEvent({
-        delay: 1500,
+        delay: 1000,
         callback: addObstacle,
         callbackScope: this,
         loop: true
@@ -46,10 +48,12 @@ function create() {
 
     cursors = this.input.keyboard.createCursorKeys();
 
-    scoreText = this.add.text(16, 16, 'النتيجة: 0', { fontSize: '32px', fill: '#fff' });
+    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
 }
 
 function update() {
+    background.tilePositionY -= 5;
+
     if (cursors.left.isDown) {
         player.setVelocityX(-200);
     } else if (cursors.right.isDown) {
@@ -71,7 +75,7 @@ function update() {
         if (obstacle.y > 600) {
             obstacle.destroy();
             score += 10;
-            scoreText.setText('النتيجة: ' + score);
+            scoreText.setText('Score: ' + score);
         }
     });
 
@@ -89,5 +93,5 @@ function addObstacle() {
 function endGame(player, obstacle) {
     this.physics.pause();
     player.setTint(0xff0000);
-    scoreText.setText('لقد خسرت! النتيجة: ' + score);
+    scoreText.setText('Game Over! Score: ' + score);
 }
