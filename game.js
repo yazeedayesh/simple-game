@@ -25,9 +25,9 @@ var scoreText;
 var game = new Phaser.Game(config);
 
 function preload() {
-    this.load.image('road', 'path/to/road.png'); // استبدل بمسار الصورة
-    this.load.image('car', 'path/to/car.png'); // استبدل بمسار الصورة
-    this.load.image('obstacle', 'path/to/obstacle.png'); // استبدل بمسار الصورة
+    this.load.image('road', 'https://github.com/yazeedayesh/simple-game/tree/main/images/1.png'); // استبدل بمسار الصورة
+    this.load.image('car', 'https://github.com/yazeedayesh/simple-game/tree/main/images/2.png'); // استبدل بمسار الصورة
+    this.load.image('obstacle', 'https://github.com/yazeedayesh/simple-game/tree/main/images/3.png'); // استبدل بمسار الصورة
 }
 
 function create() {
