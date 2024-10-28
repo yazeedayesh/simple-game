@@ -29,11 +29,11 @@ var gameOver = false;
 var game = new Phaser.Game(config);
 
 function preload() {
-    this.load.image('road', 'https://github.com/yazeedayesh/simple-game/blob/main/images/road-trip-3469810_1280.jpg'); // استبدل بمسار الصورة
-    this.load.image('car', 'path/to/car.png'); // استبدل بمسار الصورة
-    this.load.image('obstacle', 'path/to/obstacle.png'); // استبدل بمسار الصورة
-    this.load.image('background', 'path/to/background.png'); // استبدل بمسار الصورة
-    this.load.audio('bgMusic', 'path/to/background-music.mp3'); // استبدل بمسار الصوت
+    this.load.image('road', 'https://github.com/yazeedayesh/simple-game/blob/main/images/road-trip-3469810_1280.jpg'); 
+    this.load.image('car', 'path/to/car.png'); 
+    this.load.image('obstacle', 'path/to/obstacle.png'); 
+    this.load.image('background', 'path/to/background.png'); 
+    this.load.audio('bgMusic', 'path/to/background-music.mp3'); 
 }
 
 function create() {
